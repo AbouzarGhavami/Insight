@@ -82,13 +82,14 @@ def Write2File(fname, data, header, number, separator):
     return 0
     
 #fname = 'H1b_Data/H1B_FY_2014.csv'
-fname = sys.argv[1]
-joboutfile = sys.argv[2]
-statesoutfile = sys.argv[3]
+if len(sys.argv) > 3:
+    fname = sys.argv[1]
+    joboutfile = sys.argv[2]
+    statesoutfile = sys.argv[3]
 if len(sys.argv) < 4:
     fname = './input/h1b_input.csv'
     joboutfile = './output/top_10_occupations.txt'
-    statesoutfile = '.output/top_10_states.txt'
+    statesoutfile = './output/top_10_states.txt'
     
 table = maketable(fname)
 
@@ -96,6 +97,7 @@ table = maketable(fname)
 topcertifiedjobs = SortTop(table, 'JOB_TITLE', 'CASE_STATUS', 'CERTIFIED') 
 #topcertifiedstates = SortTop(table, 'LCA_CASE_WORKLOC1_STATE', 'STATUS', 'CERTIFIED')
 topcertifiedstates = SortTop(table, 'EMPLOYER_STATE', 'CASE_STATUS', 'CERTIFIED')
+#topcertifiedstates = SortTop(table, 'AGENT_ATTORNEY_STATE', 'CASE_STATUS', 'CERTIFIED')
 
 outheader = ['TOP_OCCUPATIONS', 'NUMBER_CERTIFIED_APPLICATIONS', 'PERCENTAGE']
 Write2File(joboutfile, topcertifiedjobs, outheader, 10, ';')
